@@ -1,0 +1,25 @@
+[data-bs-theme="dark"] {
+  --bs-body-bg: #111;
+  --bs-border-color: #2a2a2a;
+}
+
+.card {
+  --bs-card-bg: #171717;
+}
+
+.product-card:hover {
+  border-color: #555;
+}
+
+.product-img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.cart-img {
+  width: 80px;
+}
+
+.quantity-input {
+  width: 5rem;
+}

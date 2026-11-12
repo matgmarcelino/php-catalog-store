@@ -1,0 +1,8 @@
+# Database credentials (copy includes/config.example.php to includes/config.php)
+includes/config.php
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
