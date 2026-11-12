@@ -2,8 +2,7 @@
 
 A full-stack e-commerce storefront built with PHP and MySQL. Users create an account, log in, browse a product catalog, view product details, and manage a shopping cart with live-updating totals before checking out.
 
-<!-- Add a screenshot: save one as docs/screenshot.png and uncomment the line below -->
-<!-- ![Catalog screenshot](docs/screenshot.png) -->
+![Catalog screenshot](docs/screenshot.png)
 
 ## Features
 
