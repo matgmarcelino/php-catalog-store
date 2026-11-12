@@ -18,8 +18,8 @@
         
         $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
 
-        $password = hashPassword($username, $password);
-        $stmt->bind_param("ss", $username, $password);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $stmt->bind_param("ss", $username, $hash);
         return $stmt->execute();
     }
 
@@ -35,28 +35,21 @@
         return $res->fetch_assoc() ? true : false;
     }
 
-    function hashPassword(string $username, string $password): string {
-        $salt1 = hash("sha512", $username);
-        $salt2 = hash("sha512", $username.$username);
-
-        return hash("sha512", $salt1.$password.$salt2);
-    }
-
     function fetchAccount(string $username, string $password) {
         $conn = connectToDatabase();
-        
-        $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? and password = ?");
 
-        $password  = hashPassword($username, $password);
-        $stmt->bind_param("ss", $username, $password);
+        // Look up by username only; the hash is checked in PHP with password_verify().
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+        $stmt->bind_param("s", $username);
         $stmt->execute();
 
-        $res = $stmt->get_result();
-        if ($row = $res->fetch_assoc()) {
-            return $row;
+        $row = $stmt->get_result()->fetch_assoc();
+        if (!$row || !password_verify($password, $row['password'])) {
+            return false;
         }
 
-        return false;
+        unset($row['password']);
+        return $row;
     }
 
     function fetchProducts() {

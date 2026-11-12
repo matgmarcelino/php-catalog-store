@@ -7,7 +7,7 @@ A full-stack e-commerce storefront built with PHP and MySQL. Users create an acc
 
 ## Features
 
-- **User accounts**: registration and login backed by a MySQL `users` table, with salted password hashing and session-based authentication
+- **User accounts**: registration and login backed by a MySQL `users` table, with passwords hashed via PHP's `password_hash()` / `password_verify()` and session-based authentication
 - **Protected pages**: catalog, product and cart pages redirect to login when no one is signed in
 - **Product catalog**: products are loaded from the database and rendered as a responsive Bootstrap card grid
 - **Product detail pages**: `product.php?id=N` with validated, type-cast IDs and a "product not found" state
@@ -65,6 +65,8 @@ catalog/
    ```
 6. Visit `http://localhost/catalog`, create an account, and start shopping.
 
+> **Upgrading from an earlier version?** Passwords used to be stored as salted SHA-512 hashes and are now stored with `password_hash()`. Accounts created before the change can't log in, so clear them (`DELETE FROM users;`) and sign up again.
+
 ## What I Learned
 
 - Structuring a multi-page PHP app around shared includes for data access and rendering
@@ -74,7 +76,6 @@ catalog/
 
 ## Possible Improvements
 
-- Switch to PHP's built-in `password_hash()` / `password_verify()` for password storage
 - Add CSRF tokens to forms
 - Save orders to an `orders` table instead of only clearing the cart on checkout
 - Reuse a single database connection per request
